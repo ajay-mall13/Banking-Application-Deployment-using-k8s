@@ -197,6 +197,93 @@ By not using Docker Compose, the project simulates real-world production scenari
 
 
 
+## This repository contains Kubernetes manifests to deploy a **Banking Application** along with MySQL as the database.
+
+## 📂 Files Overview
+<img width="1370" height="398" alt="Screenshot 2025-09-25 174114" src="https://github.com/user-attachments/assets/0ee4c642-4dca-446e-9749-0d5dad70104f" />
+
+- **namespace.yml** → Creates a namespace for isolating resources.
+- **configMap.yml** → Stores configuration data for the application.
+- **secret.yml** → Stores sensitive data like DB credentials.
+- **deployment.yml** → Deploys the Banking Application pods.
+- **service.yml** → Exposes the Banking Application internally.
+- **ingress.yml** → Provides external access via Ingress Controller.
+- **mysqlStatefulSet.yml** → Deploys MySQL as a StatefulSet with persistence.
+- **mysqlService.yml** → Service for MySQL database connection.
+- **presistentvolume.yml** → Defines persistent storage volume.
+- **presistentvolumeclaim.yml** → Claims storage for MySQL pods.
+
+## 🚀 Deployment Steps
+
+1. **Create Namespace**
+   ```sh
+   kubectl apply -f namespace.yml
+   ```
+
+2. **Create ConfigMap & Secret**
+   ```sh
+   kubectl apply -f configMap.yml
+   kubectl apply -f secret.yml
+   ```
+
+3. **Setup Persistent Volumes**
+   ```sh
+   kubectl apply -f presistentvolume.yml
+   kubectl apply -f presistentvolumeclaim.yml
+   ```
+
+4. **Deploy MySQL**
+   ```sh
+   kubectl apply -f mysqlStatefulSet.yml
+   kubectl apply -f mysqlService.yml
+   ```
+
+5. **Deploy Banking Application**
+   ```sh
+   kubectl apply -f deployment.yml
+   kubectl apply -f service.yml
+   ```
+
+6. **Configure Ingress**
+   ```sh
+   kubectl apply -f ingress.yml
+   ```
+
+## 🔍 Verify Deployment
+
+- Check pods:
+  ```sh
+  kubectl get pods -n bankapp-namespace
+  ```
+
+- Check services:
+  ```sh
+  kubectl get svc -n bankapp-namespace
+  ```
+
+- Check all:
+  ```sh
+  kubectl get all -n bankapp-namespace
+  ```
+
+## 🏦 Access Application
+
+Once ingress is configured, access the application via:
+<img width="1882" height="512" alt="Screenshot 2025-09-25 162050" src="https://github.com/user-attachments/assets/266a5d38-4a7a-448e-859c-46c8e5359270" />
+```
+kubectl port-forward service/bankapp-service -n bankapp-namespace 8080:8080 --address=0.0.0.0
+
+```
+
+```
+http://<ingress-domain>/
+
+```
+---
+✅ You have successfully deployed the **Banking Application on Kubernetes**!
+
+
+
 
 ## 🧑‍💻 Author
 
