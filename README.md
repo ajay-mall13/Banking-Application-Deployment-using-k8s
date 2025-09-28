@@ -214,6 +214,30 @@ By not using Docker Compose, the project simulates real-world production scenari
 - **presistentvolumeclaim.yml** → Claims storage for MySQL pods.
 
 ## 🚀 Deployment Steps
+# Kubernetes Setup on Linux
+
+Follow these steps to install Docker, Kind, and kubectl on Linux.
+
+## 1. Install Docker
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+rm get-docker.sh
+```
+
+## 2. Install Kind
+```bash
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.27.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+```
+
+## 3. Install kubectl
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+```
 
 1. **Create Namespace**
    ```sh
